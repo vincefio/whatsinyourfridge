@@ -2,9 +2,14 @@
 <html>
 
 <head>
-    <title>Test Page</title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+
+   <title>Test Page</title>
+   <!-- Bootstrap -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+  
+	<title>Youtube Api Test</title>
+	<script src="https://code.jquery.com/jquery.js"></script>
+
 </head>
 
 <body>
@@ -65,6 +70,7 @@
             }
 
 
+//<<<<<<< nico
 
             // Declaring varible for image url
             // var imageUrl = responseJSON.recipes[0].image_url;
@@ -94,6 +100,69 @@
 
     // $(document).on("click", ".movie", displayRecipe);
     </script>
+//Beginning of Vince=======
+<script src="https://code.jquery.com/jquery.js"></script>
+
+	<input type="text" id="searchTerm">
+	<input type="submit" id="submitButton">
+
+	<div id="attachVideos"></div>
+
+	<script>
+
+	$('#submitButton').on("click", function(){
+	
+		var userSearch = $('#searchTerm').val();
+		// console.log(userSearch);
+
+		var key = "AIzaSyD3EEt-S9l6v2SWmsHC8mXGPcvG_Xtb6FY";
+		var queryURL = "https://www.googleapis.com/youtube/v3/search?key=" + key;
+		
+		var parameters = $.param({
+			maxResults: 6,
+			part: "snippet",
+			q: userSearch
+		});
+
+		$.ajax({
+			method: "GET",
+			url: "https://www.googleapis.com/youtube/v3/search?" + parameters + "&key=" + key,
+			//this url below is the one
+			//https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyD3EEt-S9l6v2SWmsHC8mXGPcvG_Xtb6FY&q=keyboart+cat
+			
+		}).done(function(response){
+
+			for(var i = 0; i < response.items.length; i++){
+				// console.log(response.items[i].id.videoId);
+				var currentVideoId = response.items[i].id.videoId;
+				console.log(currentVideoId);
+
+				var embedURL = "https://www.youtube.com/embed/";
+
+				var videoTitle = response.items[i].snippet.title;
+
+				var titlHeading = $('<h3>' + videoTitle + '</h3>');
+
+				var iframe = $('<iframe id="player" type="text/html" width="320" height="195" src="' + embedURL + currentVideoId + '" frameborder="0"></iframe>');
+
+				$('#attachVideos').append(titlHeading);
+				$('#attachVideos').append(iframe);
+			}
+
+			
+		})
+
+	});
+
+
+
+
+
+
+
+	</script>
+
+//end of vince
 </body>
 
 </html>

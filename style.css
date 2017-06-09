@@ -46,7 +46,18 @@ margin-bottom: 3%;
 .input-group-btn {
 	display: inline-block;
 	padding-bottom: 9px;
+	width: 20%;
 }
+
+.input-group-btn button {
+	width: 100%;
+}
+
+.btn-primary {
+	background-color: #337ab7;
+	background-image: none;
+}
+
 
 .well {
 	margin:auto;
@@ -64,7 +75,7 @@ margin-bottom: 3%;
 }
 
 .input-group {
-  display: inline;
+    display: block;
 }
 
 .panel-body {
@@ -87,8 +98,10 @@ margin-bottom: 3%;
 	color: black;
 }
 
-
-
+input.form-control.input-lg {
+	width: 80%;
+    display: block;
+}
 
 
 

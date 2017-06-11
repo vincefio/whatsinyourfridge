@@ -31,14 +31,92 @@
 
 
 
-//Declaring and setting Variables
+//Declaring and setting variable for ingredient array from LocalStorage
 
-var ingredientList = JSON.parse(localStorage.getItem("ingredientList"));
-
-
+var foods = JSON.parse(localStorage.getItem("ingredientList"));
 
 
-// DISPLAY RECIPE FUNCTION
+// Check for ingredientList existence within LocalStorage with the classification of Array.
+// If true, then display list in Panel  //If not true, then set variable to an empty Array.
+
+if (!Array.isArray(foods)) {
+    foods = [];
+}
+
+
+
+function addIngredient() {
+
+    $("#ingredientPush").empty(); //Deletes content in Ingredient List Panel
+
+    var locList = JSON.parse(localStorage.getItem("ingredientList"));
+
+    // Check for existence of ingredients within ingredientList LocalStorage
+    // If true, set insideList variable to ingredients //If not true, then set insideList variable to an empty Array
+
+    if (!Array.isArray(locList)) {
+        locList = [];
+    }
+
+    //Display our locList to Food Panel using for loop to loop through locList Array of Ingredients
+    //by creating a button with text of ingredient name, class of delete and data-index (for event listener functionality)
+    for (var i = 0; i < locList.length; i++) {
+        var ingredientBtn = $("<button class='delete'>").text(locList[i]).attr("data-index", i);
+        $("#ingredientPush").append(ingredientBtn);
+    }
+}
+
+
+// calls the addIngredient f(x)
+addIngredient();
+
+
+
+// EVENT LISTENER ON BUTTON TO DELETE
+$(document).on("click", "button.delete", function(){
+	var ingredientList = JSON.parse(localStorage.getItem("ingredientList"));
+	var currentIndex = $(this).attr("data-index");
+
+	ingredientList.splice(currentIndex, 1);
+	foods  = ingredientList;
+
+	localStorage.setItem("ingredientList", JSON.stringify(ingredientList));
+
+
+	addIngredient();
+});
+
+
+// EVENT LISTENER ON ADD INGREDIENT BUTTON
+
+$("#addToListBtn").on("click", function(event) {
+
+    event.preventDefault();
+
+    // Set variable to input value of ingredient form
+    var val = $("input[type='text']").val().trim();
+
+    // Clearing form value
+    $("#addIngredient").val("");
+
+    // 
+    foods.push(val);
+    localStorage.setItem("ingredientList", JSON.stringify(foods));
+
+
+    //EXECUTES addIngredient F(x)
+    addIngredient();
+
+});
+
+
+
+
+
+
+
+
+// DISPLAY RECIPE FUNCTION To be called on FIND RECIPE EVENT LISTENER
 
 
 function displayRecipe() {
@@ -49,52 +127,61 @@ function displayRecipe() {
 
     var ingredient = $('#addIngredient').val().trim();
 
-    var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + ingredient + "&count=6"; //search term
+    var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + ingredient + "&count=6" + "&callback=json"; //search term
     //search term
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
 
     $.ajax({
-            headers: {
-                "Access-Control-Allow-Origin": "*"
-            },
-            url: queryURL,
-            method: "GET",
-            crossDomain: true,
-        }).done(function(response) {
-                // parsing response to create JSON object
-                // && creating variable for object
-                var responseJSON = JSON.parse(response);
-                console.log(responseJSON);
+        headers: {
+            "Access-Control-Allow-Origin": "*",
+            "Access-Control-Allow-Methods": "*",
+            "Access-Control-Allow-Headers": "*"
 
-                for (var i = 0; i < 6; i++) {
-
-                    // console.log(responseJSON.recipes[1].title);
-                    // Declaring variable for title of recipe
-                    var title = responseJSON.recipes[i].title;
-
-                    // Hyperlink to site
-                    var recipeURL = responseJSON.recipes[i].source_url;
-
-                    // Recipe Title Test
-                    console.log("Recipe Title: " + title);
-                    console.log("Recipe link: " + recipeURL);
+        },
+        url: queryURL,
+        // dataType: "json",
+        method: "GET",
+        crossDomain: true,
+    }).done(function(response) {
+        // parsing response to create JSON object
+        // && creating variable for object
 
 
-
-                }
-
-            })
-        };
+        var responseJSON = JSON.parse(response);
+        console.log(responseJSON);
+        // console.log(response);
 
 
-            $("#recipeFinderBtn").on("click", function(event) {
-                event.preventDefault();
-                // This line grabs the input from the textbox
-                var ingredient = $("#addIngredient").val().trim();
+        for (var i = 0; i < 6; i++) {
 
-                displayRecipe();
+            // console.log(responseJSON.recipes[i].title);
 
-              });
+            // Declaring variable for title of recipe
+            var title = responseJSON.recipes[i].title;
+
+            // Hyperlink to site
+            var recipeURL = responseJSON.recipes[i].source_url;
+
+            // Recipe Title Test
+            console.log("Recipe Title " + i + ": " + title);
+            console.log("Recipe link " + i + ": " + recipeURL);
 
 
-            
+
+        }
+
+    });
+};
+
+
+
+
+// EVENT LISTENER ON FIND RECIPE BUTTON
+$("#recipeFinderBtn").on("click", function(event) {
+    event.preventDefault();
+    // This line grabs the input from the textbox
+    var ingredient = $("#addIngredient").val().trim();
+
+    displayRecipe();
+
+});

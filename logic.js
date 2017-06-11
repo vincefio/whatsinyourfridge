@@ -44,7 +44,7 @@ if (!Array.isArray(foods)) {
 }
 
 
-
+// addIngredient Function to be run on Add-to-List button
 function addIngredient() {
 
     $("#ingredientPush").empty(); //Deletes content in Ingredient List Panel
@@ -110,8 +110,8 @@ $("#addToListBtn").on("click", function(event) {
 });
 
 
-
-
+// Create variable for value of all ingredients within ingredientPush Panel
+var totalIngredients = JSON.parse(localStorage.getItem("ingredientList"));
 
 
 
@@ -125,9 +125,14 @@ function displayRecipe() {
     var apiKey = "c5f6c9518c5a1d52b477a875b36b4f47";
     // var searchItem = recipeSearch;
 
+
+    // Variable for one ingredient
     var ingredient = $('#addIngredient').val().trim();
 
-    var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + ingredient + "&count=6" + "&callback=json"; //search term
+
+
+
+    var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + totalIngredients + "&count=6" + "&callback=json"; //search term
     //search term
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
 
@@ -162,7 +167,7 @@ function displayRecipe() {
             // Hyperlink to site
             var recipeURL = responseJSON.recipes[i].source_url;
 
-            // Recipe Title Test
+            // Recipe Title & RecipeURL Test
             console.log("Recipe Title " + i + ": " + title);
             console.log("Recipe link " + i + ": " + recipeURL);
 
@@ -181,6 +186,8 @@ $("#recipeFinderBtn").on("click", function(event) {
     event.preventDefault();
     // This line grabs the input from the textbox
     var ingredient = $("#addIngredient").val().trim();
+
+    console.log(totalIngredients);
 
     displayRecipe();
 

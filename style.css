@@ -98,6 +98,10 @@ margin-bottom: 3%;
 	color: black;
 }
 
+.delete {
+	margin: 5px;
+}
+
 input.form-control.input-lg {
 	width: 80%;
     display: block;

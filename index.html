@@ -20,7 +20,11 @@
 	
 	<link rel="stylesheet" href="style.css">
 
+
+	<script src="logic.js"></script>
+
 	
+
 </head>
 <body>
 
@@ -34,11 +38,18 @@
 				  <p>Can't figure out what to eat? Have no fear! The answer is in your fridge!</p>
 				</div>
 			</div>
-					
+
+				<!-- Adding ingredient form: -->
 				<div class = "row">
 					<div class= "col-xs-10 col-xs-offset-1">
 						<div class="input-group">
+<<<<<<< HEAD
+						  <input type="text" class="form-control input-lg" id="addIngredientForm" placeholder="Add One Ingredient">
+
+						  <!-- Add to list button: -->
+=======
 						  <input type="text" class="form-control input-lg" id="addIngredient" placeholder="Add One Ingredient">
+>>>>>>> master
 						  <span class="input-group-btn">
 							<button class="btn btn-primary input-lg" id="addToListBtn" type="button">Add to List</button>
 						  </span>
@@ -48,7 +59,7 @@
 					
 					<!-- Text field should be cleared when user hits submit-->
 			
-
+			<!-- This is where ingredients are pushed: -->
 			<div class="foodInput">
 				<div class = "row">
 					<div class= "col-xs-10 col-xs-offset-1">
@@ -64,6 +75,8 @@
 						</div>
 					</div>
 				  </div>
+
+				  <!-- This is the button that user hits to find recipes: -->
 				 <div class="row">
 				 	<div class= "col-xs-10 col-xs-offset-1">
 						<button class="btn btn-primary input-lg center-block" id="recipeFinderBtn" type="button">Let's Find Recipes!</button>
@@ -74,6 +87,7 @@
 			
 			</div>
 			
+			<!-- This is where the videos/recipes populate: -->
 			<div class="recipes">
 				<div class="panel panel-default" id="recipesPanel">
 				  <div class="panel-heading">

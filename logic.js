@@ -1,64 +1,30 @@
 // PSEUDOCODE: 
 
-
-// - When user adds text in (#addIngredientForm).
-// - User clicks button (#addToListBtn):
-// 	 -User input is added into #ingredientPush.
-// 	 -#addIngredientsForm is cleared.
-
-// - User clicks on #recipeFinderBtn to trigger the AJAX call. 
-
-// Setting up global variables:
-	
-
-
-$(document).ready(function(){ 
-
-     //When the Add Ingredient button is clicked:
-     $("#addToListBtn").click(function(){
-
-     //Storing the user's ingredient in a variable:
-     var userInput = $("#addIngredientForm").val();
-     	console.log = userInput;
-     
-     //Updating the HTML to show the user's entered name:
-     $("#ingredientPush").html(userInput);
-
-     //Clearing input field after button is clicked:
-     userInput = $("#addIngredientForm").val("");
-    });
-});
-		
-
-	
-
-	
-
 // - When user adds text 
 
 // 6/10/2017
 
 // OBJECTIVE:
 
-// 	1. on ("#add-ingredient/addToListBtn") click, adds value/ingredient to panel_1 ("#ingredientPush")
+//  1. on ("#add-ingredient/addToListBtn") click, adds value/ingredient to panel_1 ("#ingredientPush")
 
-// 		// Possibly store val() of an Ingredient on Firebase THEN fetches ingredient from server to populate the list
+//      // Possibly store val() of an Ingredient on Firebase THEN fetches ingredient from server to populate the list
 
-// 	2. Create an event listener on each ingredient that deletes ingredient .on("click",)
+//  2. Create an event listener on each ingredient that deletes ingredient .on("click",)
 
-// 	3. Create variable for .val() of ingredients in ("#ingredientPush")
+//  3. Create variable for .val() of ingredients in ("#ingredientPush")
 
-// 	4. Create on click event listener for ("#recipeFinderBtn") that:
+//  4. Create on click event listener for ("#recipeFinderBtn") that:
 
-// 		A. Runs the val(). through food2fork API
+//      A. Runs the val(). through food2fork API
 
-// 			i. JSON.parse response_data 
+//          i. JSON.parse response_data 
 
-// 			ii. Grab Recipe (1) Title (2) Recipe URL
+//          ii. Grab Recipe (1) Title (2) Recipe URL
 
-// 		B. Runs the (1) Title through Youtube API to find (3) Video
+//      B. Runs the (1) Title through Youtube API to find (3) Video
 
-// 		C. Updates HTML by placing (1) Title (2) Recipe URL & (3) Video in respective <div>
+//      C. Updates HTML by placing (1) Title (2) Recipe URL & (3) Video in respective <div>
 
 
 // logic.js linked & working!
@@ -68,6 +34,16 @@ $(document).ready(function(){
 //Declaring and setting variable for ingredient array from LocalStorage
 
 var foods = JSON.parse(localStorage.getItem("ingredientList"));
+
+    //set empty array off page reload
+    var emptyArray = [];
+    localStorage.setItem("ingredientList", JSON.stringify(emptyArray));
+
+// Create variable for value of all ingredients within ingredientPush Panel
+// var totalIngredients = JSON.parse(localStorage.getItem("ingredientList"));
+
+ // var foodsString = foods.toString();
+ //    console.log(foodsString);
 
 
 // Check for ingredientList existence within LocalStorage with the classification of Array.
@@ -107,23 +83,25 @@ addIngredient();
 
 
 // EVENT LISTENER ON BUTTON TO DELETE
-$(document).on("click", "button.delete", function(){
-	var ingredientList = JSON.parse(localStorage.getItem("ingredientList"));
-	var currentIndex = $(this).attr("data-index");
+$(document).on("click", "button.delete", function(event){
+    event.preventDefault;
+    var ingredientList = JSON.parse(localStorage.getItem("ingredientList"));
+    var currentIndex = $(this).attr("data-index");
 
-	ingredientList.splice(currentIndex, 1);
-	foods  = ingredientList;
+    ingredientList.splice(currentIndex, 1);
+    foods  = ingredientList;
 
-	localStorage.setItem("ingredientList", JSON.stringify(ingredientList));
+    localStorage.setItem("ingredientList", JSON.stringify(ingredientList));
 
 
-	addIngredient();
+    addIngredient();
 });
 
 
 // EVENT LISTENER ON ADD INGREDIENT BUTTON
 
 $("#addToListBtn").on("click", function(event) {
+
 
     event.preventDefault();
 
@@ -141,11 +119,12 @@ $("#addToListBtn").on("click", function(event) {
     //EXECUTES addIngredient F(x)
     addIngredient();
 
+    console.log(foods);
+
 });
 
 
-// Create variable for value of all ingredients within ingredientPush Panel
-var totalIngredients = JSON.parse(localStorage.getItem("ingredientList"));
+
 
 
 
@@ -161,12 +140,12 @@ function displayRecipe() {
 
 
     // Variable for one ingredient
-    var ingredient = $('#addIngredient').val().trim();
+    // var ingredient = $('#addIngredient').val().trim();
 
 
 
 
-    var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + totalIngredients + "&count=6" + "&callback=json"; //search term
+    var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6" + "&callback=json"; //search term
     //search term
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
 
@@ -191,39 +170,94 @@ function displayRecipe() {
         // console.log(response);
 
 
-        for (var i = 0; i < 6; i++) {
+        for (var i = 0; i < 7; i++) {
 
             // console.log(responseJSON.recipes[i].title);
 
-            // Declaring variable for title of recipe
-            var title = responseJSON.recipes[i].title;
-
             // Hyperlink to site
             var recipeURL = responseJSON.recipes[i].source_url;
+
+            // Declaring variable for title of recipe
+            var title = responseJSON.recipes[i].title;
+            $('.video' + i).append('<a href="' + recipeURL + '"><h3>' + title + '</h3></>');
+
+            
 
             // Recipe Title & RecipeURL Test
             console.log("Recipe Title " + i + ": " + title);
             console.log("Recipe link " + i + ": " + recipeURL);
 
+            var userSearch = title;
+            console.log('user search: ' + userSearch);
 
-
+            getVideo(userSearch, i);
         }
-
     });
 };
 
+function getVideo(title, index){
+    var key = "AIzaSyD3EEt-S9l6v2SWmsHC8mXGPcvG_Xtb6FY";
+        var queryURL = "https://www.googleapis.com/youtube/v3/search?key=" + key;
+        
+        var parameters = $.param({
+            maxResults: 6,
+            part: "snippet",
+            q: title
+        });
+
+        $.ajax({
+            method: "GET",
+            url: "https://www.googleapis.com/youtube/v3/search?" + parameters + "&key=" + key,
+            //this url below is the one
+            //https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyD3EEt-S9l6v2SWmsHC8mXGPcvG_Xtb6FY&q=keyboart+cat
+            
+        }).done(function(response){
+
+            for(var j = 0; j < 1; j++){
+                // console.log(response.items[i].id.videoId);
+                var currentVideoId = response.items[j].id.videoId;
+                console.log(currentVideoId);
+
+                var embedURL = "https://www.youtube.com/embed/";
+
+                var videoTitle = response.items[j].snippet.title;
+
+                var titlHeading = $('<h3>' + videoTitle + '</h3>');
+
+                var iframe = $('<iframe id="player" type="text/html" width="250" height="125" src="' + embedURL + currentVideoId + '" frameborder="0"></iframe>');
+
+                // $('.video' + j).append(titlHeading);
+                // $('.video' + j).append(title);
+                $('.video' + index).append(iframe);
+
+                //  $('.recipes').append(titlHeading);
+                // $('.recipes').append(iframe);
+            } 
+        });
+}
 
 
 
 // EVENT LISTENER ON FIND RECIPE BUTTON
 $("#recipeFinderBtn").on("click", function(event) {
+    // var foodsString = foods.toString();
+    // console.log(foodsString);
+    
+    // console.log(parseArray);
     event.preventDefault();
     // This line grabs the input from the textbox
-    var ingredient = $("#addIngredient").val().trim();
+    // var ingredient = $("#addIngredient").val().trim();
 
-    console.log(totalIngredients);
+    $('#ingredientPush').empty();
+  
+
 
     displayRecipe();
+    // console.log(foods);
+      // foods = [];
+
+    var emptyArray = [];
+    localStorage.setItem("ingredientList", JSON.stringify(emptyArray));
+
 
 });
-

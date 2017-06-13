@@ -173,7 +173,7 @@ function displayRecipe() {
         console.log(data)
         console.log(typeof data)
     }
-    alert('hi world')
+    alert('hi world 2')
     $.ajax({
         headers: {
             "Access-Control-Allow-Origin": "*",

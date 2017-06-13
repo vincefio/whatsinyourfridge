@@ -173,12 +173,12 @@ function displayRecipe() {
     }
     alert('hi world')
     $.ajax({
-        // headers: {
-            // "Access-Control-Allow-Origin": "*",
+        headers: {
+            "Access-Control-Allow-Origin": "*",
             // "Access-Control-Allow-Origin": "*",
             // "Access-Control-Allow-Headers": "*"
 
-        // },
+        },
         url: queryURL,
         dataType: "jsonp",
         jsonpCallback: 'callBackTest',

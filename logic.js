@@ -167,13 +167,13 @@ function displayRecipe() {
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
     // debugger
 
-    function callBackTest(data){
-        alert('hey der')
-        debugger
-        console.log(data)
-        console.log(typeof data)
-    }
-    alert('hi world 2')
+    // function callBackTest(data){
+    //     alert('hey der')
+    //     debugger
+    //     console.log(data)
+    //     console.log(typeof data)
+    // }
+    // alert('hi world 2')
     $.ajax({
         headers: {
             "Access-Control-Allow-Origin": "*",
@@ -186,21 +186,21 @@ function displayRecipe() {
         // jsonp: 'callBackTest',
         // jsonp: false,
         method: "GET",
-        // crossDomain: true,
+        crossDomain: true,
     })
     .done(function(response) {
         // parsing response to create JSON object
         // && creating variable for object
-        debugger
+        // debugger
 
-        // var responseJSON = JSON.parse(response);
-        // console.log(responseJSON);
-        console.log(response);
-        console.log(typeof response)
-        // console.log("queryURL-enabled")
+        var responseJSON = JSON.parse(response);
+        console.log(responseJSON);
+        // console.log(response);
+        // console.log(typeof response)
+        console.log("queryURL-enabled")
         // console.log("---------")
         // console.log(queryURL);
-        console.log("queryURL-disabled")
+        // console.log("queryURL-disabled")
         console.log("---------");
         console.log(queryURL);
 

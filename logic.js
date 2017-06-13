@@ -180,9 +180,9 @@ function displayRecipe() {
 
         },
         url: queryURL,
-        dataType: "jsonp",
-        jsonpCallback: 'callBackTest',
-        jsonp: false,
+        // dataType: "jsonp",
+        // jsonp: 'callBackTest',
+        // jsonp: false,
         method: "GET",
         // crossDomain: true,
     })

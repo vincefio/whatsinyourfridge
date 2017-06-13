@@ -160,7 +160,9 @@ function displayRecipe() {
 
 
 
-    var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6" + "&callback=json"; //search term
+    // var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6" + "&callback=json"; //search term
+    var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6"; //search term
+
     //search term
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
     // debugger

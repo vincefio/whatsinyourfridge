@@ -163,26 +163,34 @@ function displayRecipe() {
     var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6" + "&callback=json"; //search term
     //search term
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
-
+    debugger
     $.ajax({
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "*",
-            "Access-Control-Allow-Headers": "*"
+        // headers: {
+            // "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Origin": "*",
+            // "Access-Control-Allow-Headers": "*"
 
-        },
+        // },
         url: queryURL,
-        // dataType: "json",
+        dataType: "jsonp",
         method: "GET",
         crossDomain: true,
     }).done(function(response) {
         // parsing response to create JSON object
         // && creating variable for object
+        debugger
 
+        // var responseJSON = JSON.parse(response);
+        // console.log(responseJSON);
+        console.log(response);
+        console.log(typeof response)
+        // console.log("queryURL-enabled")
+        // console.log("---------")
+        // console.log(queryURL);
+        console.log("queryURL-disabled")
+        console.log("---------");
+        console.log(queryURL);
 
-        var responseJSON = JSON.parse(response);
-        console.log(responseJSON);
-        // console.log(response);
 
 
         for (var i = 0; i < 7; i++) {

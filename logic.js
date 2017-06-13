@@ -164,6 +164,12 @@ function displayRecipe() {
     //search term
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
     debugger
+
+    function callBackTest(data){
+        debugger
+        console.log(data)
+        console.log(typeof data)
+    }
     $.ajax({
         // headers: {
             // "Access-Control-Allow-Origin": "*",
@@ -173,7 +179,8 @@ function displayRecipe() {
         // },
         url: queryURL,
         dataType: "jsonp",
-        jsonpCallback: 'callback',
+        jsonpCallback: 'callbackTest',
+        jsonp: false,
         method: "GET",
         crossDomain: true,
     }).done(function(response) {

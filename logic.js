@@ -181,11 +181,12 @@ function displayRecipe() {
         // },
         url: queryURL,
         dataType: "jsonp",
-        jsonpCallback: 'callbackTest',
+        jsonpCallback: 'callBackTest',
         jsonp: false,
         method: "GET",
         // crossDomain: true,
-    }).done(function(response) {
+    })
+    .done(function(response) {
         // parsing response to create JSON object
         // && creating variable for object
         debugger

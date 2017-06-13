@@ -1,4 +1,3 @@
-alert('hello')
 // PSEUDOCODE: 
 
 // - When user adds text 
@@ -166,12 +165,13 @@ function displayRecipe() {
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
     // debugger
 
-    // function callBackTest(data){
-        // debugger
-        // console.log(data)
-        // console.log(typeof data)
-    // }
-    alert('hi')
+    function callBackTest(data){
+        alert('hey der')
+        debugger
+        console.log(data)
+        console.log(typeof data)
+    }
+    alert('hi world')
     $.ajax({
         // headers: {
             // "Access-Control-Allow-Origin": "*",
@@ -181,7 +181,7 @@ function displayRecipe() {
         // },
         url: queryURL,
         dataType: "jsonp",
-        // jsonpCallback: 'callbackTest',
+        jsonpCallback: 'callbackTest',
         jsonp: false,
         method: "GET",
         // crossDomain: true,

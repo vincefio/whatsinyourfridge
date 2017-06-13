@@ -30,20 +30,26 @@
 // logic.js linked & working!
 
 
+// Hides Recipe Panel on Page Load
+$(".recipes").hide();
+
+// Hides ingredient panel on page load
+$("#ingredientPush").hide();
+
 
 //Declaring and setting variable for ingredient array from LocalStorage
 
 var foods = JSON.parse(localStorage.getItem("ingredientList"));
 
-    //set empty array off page reload
-    var emptyArray = [];
-    localStorage.setItem("ingredientList", JSON.stringify(emptyArray));
+//set empty array off page reload
+var emptyArray = [];
+localStorage.setItem("ingredientList", JSON.stringify(emptyArray));
 
 // Create variable for value of all ingredients within ingredientPush Panel
 // var totalIngredients = JSON.parse(localStorage.getItem("ingredientList"));
 
- // var foodsString = foods.toString();
- //    console.log(foodsString);
+// var foodsString = foods.toString();
+//    console.log(foodsString);
 
 
 // Check for ingredientList existence within LocalStorage with the classification of Array.
@@ -83,13 +89,13 @@ addIngredient();
 
 
 // EVENT LISTENER ON BUTTON TO DELETE
-$(document).on("click", "button.delete", function(event){
+$(document).on("click", "button.delete", function(event) {
     event.preventDefault;
     var ingredientList = JSON.parse(localStorage.getItem("ingredientList"));
     var currentIndex = $(this).attr("data-index");
 
     ingredientList.splice(currentIndex, 1);
-    foods  = ingredientList;
+    foods = ingredientList;
 
     localStorage.setItem("ingredientList", JSON.stringify(ingredientList));
 
@@ -102,7 +108,7 @@ $(document).on("click", "button.delete", function(event){
 
 $("#addToListBtn").on("click", function(event) {
 
-        alert("Click 1");
+
     event.preventDefault();
 
     // Set variable to input value of ingredient form
@@ -111,6 +117,7 @@ $("#addToListBtn").on("click", function(event) {
     // Clearing form value
     $("#addIngredientForm").val("");
 
+    $("#ingredientPush").show();
     // 
     foods.push(val);
     localStorage.setItem("ingredientList", JSON.stringify(foods));
@@ -124,30 +131,13 @@ $("#addToListBtn").on("click", function(event) {
 });
 
 
-// // $(document).keypress(function(event) {
-//     // event.preventDefault();
-//     if (event.which == 13) {
+$("#addIngredientForm").keyup(function(event) {
+    // event.preventDefault();
+    if (event.keyCode == 13) {
+        $("#addToListBtn").click();
 
-//             alert("Click2");
-        
-
-//         // Set variable to input value of ingredient form
-//         var val = $("input[type='text']").val().trim();
-
-//         // Clearing form value
-//         // $("#addIngredientForm").val("");
-
-//         // 
-//         foods.push(val);
-//         localStorage.setItem("ingredientList", JSON.stringify(foods));
-
-
-//         //EXECUTES addIngredient F(x)
-//         addIngredient();
-
-//         console.log(foods);
-//     }
-// });
+    }
+});
 
 
 
@@ -204,9 +194,9 @@ function displayRecipe() {
 
             // Declaring variable for title of recipe
             var title = responseJSON.recipes[i].title;
-            $('.video' + i).append('<a href="' + recipeURL + '"><h3>' + title + '</h3></>');
+            $('.video' + i).append('<a class="videoHeader" href="' + recipeURL + '" target=_blank><div id="vid_title"><h5>' + title + '</h5></div></>');
 
-            
+
 
             // Recipe Title & RecipeURL Test
             console.log("Recipe Title " + i + ": " + title);
@@ -220,45 +210,45 @@ function displayRecipe() {
     });
 };
 
-function getVideo(title, index){
+function getVideo(title, index) {
     var key = "AIzaSyD3EEt-S9l6v2SWmsHC8mXGPcvG_Xtb6FY";
-        var queryURL = "https://www.googleapis.com/youtube/v3/search?key=" + key;
-        
-        var parameters = $.param({
-            maxResults: 6,
-            part: "snippet",
-            q: title
-        });
+    var queryURL = "https://www.googleapis.com/youtube/v3/search?key=" + key;
 
-        $.ajax({
-            method: "GET",
-            url: "https://www.googleapis.com/youtube/v3/search?" + parameters + "&key=" + key,
-            //this url below is the one
-            //https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyD3EEt-S9l6v2SWmsHC8mXGPcvG_Xtb6FY&q=keyboart+cat
-            
-        }).done(function(response){
+    var parameters = $.param({
+        maxResults: 6,
+        part: "snippet",
+        q: title
+    });
 
-            for(var j = 0; j < 1; j++){
-                // console.log(response.items[i].id.videoId);
-                var currentVideoId = response.items[j].id.videoId;
-                console.log(currentVideoId);
+    $.ajax({
+        method: "GET",
+        url: "https://www.googleapis.com/youtube/v3/search?" + parameters + "&key=" + key,
+        //this url below is the one
+        //https://www.googleapis.com/youtube/v3/search?part=snippet&key=AIzaSyD3EEt-S9l6v2SWmsHC8mXGPcvG_Xtb6FY&q=keyboart+cat
 
-                var embedURL = "https://www.youtube.com/embed/";
+    }).done(function(response) {
 
-                var videoTitle = response.items[j].snippet.title;
+        for (var j = 0; j < 1; j++) {
+            // console.log(response.items[i].id.videoId);
+            var currentVideoId = response.items[j].id.videoId;
+            console.log(currentVideoId);
 
-                var titlHeading = $('<h3>' + videoTitle + '</h3>');
+            var embedURL = "https://www.youtube.com/embed/";
 
-                var iframe = $('<iframe id="player" type="text/html" width="250" height="125" src="' + embedURL + currentVideoId + '" frameborder="0"></iframe>');
+            var videoTitle = response.items[j].snippet.title;
 
-                // $('.video' + j).append(titlHeading);
-                // $('.video' + j).append(title);
-                $('.video' + index).append(iframe);
+            var titlHeading = $('<h3>' + videoTitle + '</h3>');
 
-                //  $('.recipes').append(titlHeading);
-                // $('.recipes').append(iframe);
-            } 
-        });
+            var iframe = $('<iframe id="player" type="text/html" width="220" height="115" src="' + embedURL + currentVideoId + '" frameborder="0"></iframe>');
+
+            // $('.video' + j).append(titlHeading);
+            // $('.video' + j).append(title);
+            $('.video' + index).append(iframe);
+
+            //  $('.recipes').append(titlHeading);
+            // $('.recipes').append(iframe);
+        }
+    });
 }
 
 
@@ -267,22 +257,32 @@ function getVideo(title, index){
 $("#recipeFinderBtn").on("click", function(event) {
     // var foodsString = foods.toString();
     // console.log(foodsString);
-    
+
     // console.log(parseArray);
     event.preventDefault();
     // This line grabs the input from the textbox
     // var ingredient = $("#addIngredient").val().trim();
 
     $('#ingredientPush').empty();
-  
+
+    //Shows .recipe div
+
+    $(".recipes").show();
+    $("#ingredientPush").hide();
+
 
 
     displayRecipe();
     // console.log(foods);
-      // foods = [];
+    // foods = [];
 
     var emptyArray = [];
     localStorage.setItem("ingredientList", JSON.stringify(emptyArray));
 
+
+    $('.videoHeader').each(function() {
+        var $this = $(this);
+        $this.css('margin-top', $this.parent().height() - $this.height())
+    });
 
 });

@@ -102,14 +102,14 @@ $(document).on("click", "button.delete", function(event){
 
 $("#addToListBtn").on("click", function(event) {
 
-
+        alert("Click 1");
     event.preventDefault();
 
     // Set variable to input value of ingredient form
     var val = $("input[type='text']").val().trim();
 
     // Clearing form value
-    $("#addIngredient").val("");
+    $("#addIngredientForm").val("");
 
     // 
     foods.push(val);
@@ -123,6 +123,31 @@ $("#addToListBtn").on("click", function(event) {
 
 });
 
+
+// // $(document).keypress(function(event) {
+//     // event.preventDefault();
+//     if (event.which == 13) {
+
+//             alert("Click2");
+        
+
+//         // Set variable to input value of ingredient form
+//         var val = $("input[type='text']").val().trim();
+
+//         // Clearing form value
+//         // $("#addIngredientForm").val("");
+
+//         // 
+//         foods.push(val);
+//         localStorage.setItem("ingredientList", JSON.stringify(foods));
+
+
+//         //EXECUTES addIngredient F(x)
+//         addIngredient();
+
+//         console.log(foods);
+//     }
+// });
 
 
 

@@ -163,13 +163,14 @@ function displayRecipe() {
     var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6" + "&callback=json"; //search term
     //search term
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
-    debugger
+    // debugger
 
-    function callBackTest(data){
-        debugger
-        console.log(data)
-        console.log(typeof data)
-    }
+    // function callBackTest(data){
+        // debugger
+        // console.log(data)
+        // console.log(typeof data)
+    // }
+    alert('hi')
     $.ajax({
         // headers: {
             // "Access-Control-Allow-Origin": "*",
@@ -179,10 +180,10 @@ function displayRecipe() {
         // },
         url: queryURL,
         dataType: "jsonp",
-        jsonpCallback: 'callbackTest',
+        // jsonpCallback: 'callbackTest',
         jsonp: false,
         method: "GET",
-        crossDomain: true,
+        // crossDomain: true,
     }).done(function(response) {
         // parsing response to create JSON object
         // && creating variable for object

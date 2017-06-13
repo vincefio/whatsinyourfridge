@@ -1,3 +1,4 @@
+alert('hello')
 // PSEUDOCODE: 
 
 // - When user adds text 

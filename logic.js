@@ -161,7 +161,7 @@ function displayRecipe() {
 
 
     // var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6" + "&callback=json"; //search term
-    var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6"; //search term
+    var queryURL = "https://food2fork-server.herokuapp.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6"; //search term
 
     //search term
     //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
@@ -175,18 +175,8 @@ function displayRecipe() {
     // }
     // alert('hi world 2')
     $.ajax({
-        headers: {
-            "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Origin": "*",
-            // "Access-Control-Allow-Headers": "*"
-
-        },
         url: queryURL,
-        // dataType: "jsonp",
-        // jsonp: 'callBackTest',
-        // jsonp: false,
         method: "GET",
-        crossDomain: true,
     })
     .done(function(response) {
         // parsing response to create JSON object

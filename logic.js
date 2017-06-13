@@ -173,6 +173,7 @@ function displayRecipe() {
         // },
         url: queryURL,
         dataType: "jsonp",
+        jsonpCallback: 'callback',
         method: "GET",
         crossDomain: true,
     }).done(function(response) {

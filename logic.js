@@ -1,34 +1,3 @@
-// PSEUDOCODE: 
-
-// - When user adds text 
-
-// 6/10/2017
-
-// OBJECTIVE:
-
-//  1. on ("#add-ingredient/addToListBtn") click, adds value/ingredient to panel_1 ("#ingredientPush")
-
-//      // Possibly store val() of an Ingredient on Firebase THEN fetches ingredient from server to populate the list
-
-//  2. Create an event listener on each ingredient that deletes ingredient .on("click",)
-
-//  3. Create variable for .val() of ingredients in ("#ingredientPush")
-
-//  4. Create on click event listener for ("#recipeFinderBtn") that:
-
-//      A. Runs the val(). through food2fork API
-
-//          i. JSON.parse response_data 
-
-//          ii. Grab Recipe (1) Title (2) Recipe URL
-
-//      B. Runs the (1) Title through Youtube API to find (3) Video
-
-//      C. Updates HTML by placing (1) Title (2) Recipe URL & (3) Video in respective <div>
-
-
-// logic.js linked & working!
-
 
 // Hides Recipe Panel on Page Load
 $(".recipes").hide();
@@ -47,10 +16,6 @@ localStorage.setItem("ingredientList", JSON.stringify(emptyArray));
 
 // Create variable for value of all ingredients within ingredientPush Panel
 // var totalIngredients = JSON.parse(localStorage.getItem("ingredientList"));
-
-// var foodsString = foods.toString();
-//    console.log(foodsString);
-
 
 // Check for ingredientList existence within LocalStorage with the classification of Array.
 // If true, then display list in Panel  //If not true, then set variable to an empty Array.
@@ -139,13 +104,7 @@ $("#addIngredientForm").keyup(function(event) {
     }
 });
 
-
-
-
-
-
 // DISPLAY RECIPE FUNCTION To be called on FIND RECIPE EVENT LISTENER
-
 
 function displayRecipe() {
 
@@ -153,27 +112,9 @@ function displayRecipe() {
     var apiKey = "c5f6c9518c5a1d52b477a875b36b4f47";
     // var searchItem = recipeSearch;
 
-
-    // Variable for one ingredient
-    // var ingredient = $('#addIngredient').val().trim();
-
-
-
-
     // var queryURL = "https://food2fork.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6" + "&callback=json"; //search term
     var queryURL = "https://food2fork-server.herokuapp.com/api/search?key=" + apiKey + "&q=" + foods + "&count=6"; //search term
 
-    //search term
-    //   https://food2fork.com/api/search?key=c5f6c9518c5a1d52b477a875b36b4f47&q=bacon,chicken,apple
-    // debugger
-
-    // function callBackTest(data){
-    //     alert('hey der')
-    //     debugger
-    //     console.log(data)
-    //     console.log(typeof data)
-    // }
-    // alert('hi world 2')
     $.ajax({
         url: queryURL,
         method: "GET",
@@ -206,8 +147,6 @@ function displayRecipe() {
             // Declaring variable for title of recipe
             var title = responseJSON.recipes[i].title;
             $('.video' + i).append('<a class="videoHeader" href="' + recipeURL + '" target=_blank><div id="vid_title"><h5>' + title + '</h5></div></>');
-
-
 
             // Recipe Title & RecipeURL Test
             console.log("Recipe Title " + i + ": " + title);
@@ -252,12 +191,8 @@ function getVideo(title, index) {
 
             var iframe = $('<iframe id="player" type="text/html" width="220" height="115" src="' + embedURL + currentVideoId + '" frameborder="0"></iframe>');
 
-            // $('.video' + j).append(titlHeading);
-            // $('.video' + j).append(title);
             $('.video' + index).append(iframe);
 
-            //  $('.recipes').append(titlHeading);
-            // $('.recipes').append(iframe);
         }
     });
 }
@@ -266,13 +201,9 @@ function getVideo(title, index) {
 
 // EVENT LISTENER ON FIND RECIPE BUTTON
 $("#recipeFinderBtn").on("click", function(event) {
-    // var foodsString = foods.toString();
-    // console.log(foodsString);
 
     // console.log(parseArray);
     event.preventDefault();
-    // This line grabs the input from the textbox
-    // var ingredient = $("#addIngredient").val().trim();
 
     $('#ingredientPush').empty();
 
